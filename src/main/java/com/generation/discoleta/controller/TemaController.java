@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.generation.discoleta.model.Tema;
+import com.generation.discoleta.repository.TemaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.generation.discoleta.model.Tema;
 
 @RestController
 @RequestMapping("/tema")
@@ -38,16 +39,16 @@ public class TemaController {
 
 	@RequestMapping("/nome/{nome}") // Método get para listar temas pelo gênero
 	public ResponseEntity<List<Tema>> getBynome(@PathVariable String nome) {
-		return ResponseEntity.ok(temaRepository.findAllBynomeContainingIgnoreCase(nome));
+		return ResponseEntity.ok(temaRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 
 	@PostMapping // Método post para criar uma tema
-	public ResponseEntity<tema> posttema(@Valid @RequestBody tema tema) {
+	public ResponseEntity<Tema> posttema(@Valid @RequestBody Tema tema) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(temaRepository.save(tema));
 	}
 
 	@PutMapping // Método put para atualizar uma tema
-	public ResponseEntity<tema> puttema(@Valid @RequestBody tema tema) {
+	public ResponseEntity<Tema> puttema(@Valid @RequestBody Tema tema) {
 		if (temaRepository.existsById(tema.getId())) {
 			return ResponseEntity.status(HttpStatus.OK).body(temaRepository.save(tema));
 		}
