@@ -14,7 +14,7 @@
 	<name>discoleta</name>
 	<description>Projeto Integrador</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
