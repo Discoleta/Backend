@@ -11,6 +11,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -31,7 +33,7 @@ public class Postagem {
 	
 	private String imagem;
 	
-	@NotBlank(message = "O atributo data é obrigatório!")
+	@UpdateTimestamp
 	private LocalDateTime data;
 	
 	@NotBlank(message = "O atributo bairro é obrigatório!")
