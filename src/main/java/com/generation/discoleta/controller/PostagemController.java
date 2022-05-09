@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.generation.discoleta.model.Postagem;
 import com.generation.discoleta.repository.PostagemRepository;
+import com.generation.discoleta.repository.TemaRepository;
 
 @RestController
 @RequestMapping("/postagens")
@@ -26,6 +27,9 @@ import com.generation.discoleta.repository.PostagemRepository;
 public class PostagemController {
 	@Autowired
 	private PostagemRepository postagemRepository;
+	
+	@Autowired
+	private TemaRepository temaRepository;
 
 	@GetMapping
 	public ResponseEntity<List<Postagem>> getAll() {
@@ -44,8 +48,12 @@ public class PostagemController {
 	}
 
 	@PostMapping // Método post para criar uma postagem
-	public ResponseEntity<Postagem> postpostagem(@Valid @RequestBody Postagem postagem) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(postagemRepository.save(postagem));
+	public ResponseEntity <Postagem> postPostagem(@Valid @RequestBody Postagem postagem){
+		if(temaRepository.existsById(postagem.getTema().getId()))
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(postagemRepository.save(postagem));
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
 	@PutMapping // Método put para atualizar uma postagem
